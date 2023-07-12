@@ -13,14 +13,8 @@ export const getDatesPeriod = (startDate : string, endDate : string , steps = 1)
     return dateArray.map((v)=>v.toISOString().slice(0,10) as string)
 }
 
-export const getMinDateFormat = () => {
-    const date = new Date();
-    
-    return date.toLocaleDateString("en-GB", { // you can use undefined as first argument
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-    });
+export const getMinDateFormat = () => {  
+    return new Date().getFullYear()+'-'+(new Date().getMonth() + 1)+'-'+new Date().getDate();
 }
 
 export const dateDiffInDays = (a : Date, b : Date) => {

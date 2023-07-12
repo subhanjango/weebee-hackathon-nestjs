@@ -13,7 +13,6 @@ export class UsersService {
         if(userAvailable) {
             return userAvailable;
         }
-
         return await this.userRepository.save(this.userRepository.create({
             email,
             firstName,

@@ -29,7 +29,6 @@ export class ProviderServicesService {
             }
             return availableSlot;
         } catch(e) {
-            console.log(e)
             throw e;
         }   
     }

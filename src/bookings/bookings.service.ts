@@ -12,60 +12,47 @@ export class BookingsService {
     private booking : Repository<Booking> , 
     private readonly providerServicesService : ProviderServicesService , 
     private readonly userService : UsersService){}
-
+    
     async createBooking(data : CreateBookingDto) {
-        try {
 
-            data.date = this.revertDateToString(data.date , 'DATE');
-
-            let slotAvailable = await this.providerServicesService.isSlotAvailable(data.providerServiceId , data.date , data.startTime, data.endTime, data.users.length);
-
-            console.log('slotAvailable' , slotAvailable);
-
-            let bookings = data.users.map(async (user) => {
-                
-                let bookingFor = await this.userService.createUser(user.emailAddress , user.firstName , user.lastName);
-                
-                let booking = await this.booking.save(this.booking.create({
-                    providerServiceId : data.providerServiceId,
-                    date : data.date,
-                    startTime : slotAvailable.startTime,
-                    endTime : slotAvailable.endTime,
-                    userId : bookingFor.id
-                }));
-
-                return booking.id;
-
+        data.date = this.revertDateToString(data.date , 'DATE');
+        
+        let slotAvailable = await this.providerServicesService.isSlotAvailable(data.providerServiceId , data.date , data.startTime, data.endTime, data.users.length);
+        
+        let bookings = data.users.map(async (user) => {
+            
+            let bookingFor = await this.userService.createUser(user.emailAddress , user.firstName , user.lastName);
+            
+            return this.booking.create({
+                providerServiceId : data.providerServiceId,
+                date : data.date,
+                startTime : slotAvailable.startTime,
+                endTime : slotAvailable.endTime,
+                userId : bookingFor.id
             });
-
-            let bookingIds = await Promise.all(bookings);
-
-            return await this.booking.find({
-                relations : {
-                    user : true,
-                    providerService : true
-                },
-                where : {
-                    id : In(bookingIds)
-                }
-            })
-
-        }catch(e) {
-            return {
-                status : false,
-                error : e
+        });
+        
+        let bookingIds = (await this.booking.save(await Promise.all(bookings))).map(value => value.id);
+        
+        return await this.booking.find({
+            relations : {
+                user : true,
+                providerService : true
+            },
+            where : {
+                id : In(bookingIds)
             }
-        }
+        });
     }
-
+    
     private revertDateToString(value , type : 'DATE' | 'TIME') : string {
         switch(type) {
             case 'DATE':
-                value = value.toISOString().split('T')[0];
-                break;
-
+            value = value.toISOString().split('T')[0];
+            break;
+            
             case 'TIME':
-                value = value.toISOString().split('T')[1].split(':')[0] + ':' + value.toISOString().split('T')[1].split(':')[1]
+            value = value.toISOString().split('T')[1].split(':')[0] + ':' + value.toISOString().split('T')[1].split(':')[1]
         }
         return value;
     }
