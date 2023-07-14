@@ -21,7 +21,7 @@ export class ProviderServicesBreak {
     @Column()
     endTime: string;
     
-    @Column({ type: 'timestamp' })
+    @Column({ type: 'datetime' , default : () => 'CURRENT_TIMESTAMP' })
     createdAt?: string;
 
     @ManyToOne(() => ProviderServices , (providerService) => providerService.providerServicesBreak)

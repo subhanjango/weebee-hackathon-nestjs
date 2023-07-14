@@ -12,16 +12,16 @@ export class ProviderServicesSchedule {
     @Column()
     dayNumber: number;
     
-    @Column()
-    startTime: string;
+    @Column({ nullable : true })
+    startTime?: string;
 
-    @Column()
-    endTime: string;
+    @Column({ nullable : true })
+    endTime?: string;
     
     @Column()
     dayOff: boolean;
     
-    @Column({ type: 'timestamp' })
+    @Column({ type: 'datetime' , default : () => 'CURRENT_TIMESTAMP' })
     createdAt?: string;
 
     @ManyToOne(() => ProviderServices , (providerService) => providerService.providerServicesSchedule)

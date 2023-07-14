@@ -24,7 +24,7 @@ export class ProviderServices {
     @Column()
     prepBreakInMinute: number;
     
-    @Column({ type : 'timestamp' })
+    @Column({ type : 'datetime' , default : () => 'CURRENT_TIMESTAMP' })
     createdAt: string;
 
     @OneToMany(() => ProviderServicesBreak , (providerServicesBreak) => providerServicesBreak.providerService)

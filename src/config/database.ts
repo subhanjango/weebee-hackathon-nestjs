@@ -6,5 +6,5 @@ export default () => ({
     dbUsername : process.env.DB_USERNAME || 'root',
     dbPassword : process.env.DB_PASSWORD || '',
     dbSync : process.env.DB_SYNC || true,
-    dbLogging : process.env.DB_SYNC || true,
+    dbLogging : process.env.DB_SYNC || true
 });

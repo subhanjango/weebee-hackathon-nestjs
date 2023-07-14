@@ -22,7 +22,7 @@ export class Booking {
     @Column()
     userId: number;
     
-    @Column({ type: 'timestamp' })
+    @Column({ type: 'datetime' , default : () => 'CURRENT_TIMESTAMP' })
     createdAt: string;
 
     @ManyToOne(() => ProviderServices , (providerService) => providerService.bookings)

@@ -15,7 +15,7 @@ export class User {
     @Column()
     lastName: string;
 
-    @Column({ type: 'timestamp' })
+    @Column({ type: 'datetime' , default : () => 'CURRENT_TIMESTAMP' })
     createdAt: string;
 
     @OneToMany(() => Booking , (booking) => booking.user)

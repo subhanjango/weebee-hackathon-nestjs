@@ -6,9 +6,12 @@ import { Booking } from './entities/bookings.entity';
 import { ProviderServicesModule } from '../provider-services/provider-services.module';
 import { UsersModule } from '../users/users.module';
 
-@Module({
+
+export const bookingsModule = {
   controllers: [BookingsController],
   providers: [BookingsService],
   imports : [TypeOrmModule.forFeature([Booking]) , ProviderServicesModule , UsersModule]
-})
+}
+
+@Module(bookingsModule)
 export class BookingsModule {}
