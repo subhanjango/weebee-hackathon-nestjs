@@ -5,7 +5,7 @@ import { ProviderServicesService } from './provider-services.service';
 export class ProviderServicesController {
   constructor(private readonly providerServicesService: ProviderServicesService) {}
 
-  @Get('schedule')
+  @Get('/schedule')
   async getSchedule() {
     return await this.providerServicesService.getSchedule();
   }

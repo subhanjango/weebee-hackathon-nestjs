@@ -76,7 +76,7 @@ export class ProviderServicesService {
         }
     }
     
-    async getSchedule(providerServiceId? : number) : Promise<ProviderServices[] | ProviderServices> {  
+    async getSchedule() : Promise<ProviderServices[]> {  
         let query = {
             relations : {
                 providerServicesBreak:true,
@@ -100,10 +100,6 @@ export class ProviderServicesService {
             }
         };
         
-        if(providerServiceId) {
-            query['where'] = {id : providerServiceId};
-            return await this.providerServicesRepository.findOne(query as FindOneOptions<ProviderServices>);
-        }
         return await this.providerServicesRepository.find(query as FindManyOptions<ProviderServices>) 
     }
     
