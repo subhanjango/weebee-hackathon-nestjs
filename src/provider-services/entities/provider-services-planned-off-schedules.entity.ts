@@ -15,10 +15,10 @@ export class ProviderServicesPlannedOffSchedule {
     @Column()
     date : string
 
-    @Column()
+    @Column({ default : null})
     startTime? : string
 
-    @Column()
+    @Column({ default : null })
     endTime? : string
 
     @Column()

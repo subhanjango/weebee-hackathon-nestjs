@@ -46,14 +46,19 @@ export class BookingsService {
     }
     
     private revertDateToString(value , type : 'DATE' | 'TIME') : string {
-        switch(type) {
-            case 'DATE':
-            value = value.toISOString().split('T')[0];
-            break;
-            
-            case 'TIME':
-            value = value.toISOString().split('T')[1].split(':')[0] + ':' + value.toISOString().split('T')[1].split(':')[1]
+        try {
+            switch(type) {
+                case 'DATE':
+                value = value.toISOString().split('T')[0];
+                break;
+                
+                case 'TIME':
+                value = value.toISOString().split('T')[1].split(':')[0] + ':' + value.toISOString().split('T')[1].split(':')[1]
+            }
+        } catch(e){
+            //already converted
         }
+        
         return value;
     }
 }
