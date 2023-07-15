@@ -21,7 +21,7 @@ export class BookingsService {
         
         let bookings = data.users.map(async (user) => {
             
-            let bookingFor = await this.userService.createUser(user.emailAddress , user.firstName , user.lastName);
+            let bookingFor = await this.userService.createUser(user);
             
             return this.booking.create({
                 providerServiceId : data.providerServiceId,
